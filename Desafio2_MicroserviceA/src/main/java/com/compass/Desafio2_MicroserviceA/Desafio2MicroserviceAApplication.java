@@ -1,0 +1,13 @@
+package com.compass.Desafio2_MicroserviceA;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Desafio2MicroserviceAApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Desafio2MicroserviceAApplication.class, args);
+	}
+
+}
