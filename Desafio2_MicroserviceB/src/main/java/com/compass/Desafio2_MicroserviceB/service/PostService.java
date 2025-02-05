@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
+import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
 
@@ -18,67 +19,50 @@ public class PostService {
 
     private final JsonPlaceholderClient jsonPlaceholderClient;
     private final PostRepository postRepository;
+    private final PostMapper postMapper; // Injeção do Mapper
 
     public void syncData() {
         List<PostDTO> postDTOList = jsonPlaceholderClient.getAllPosts();
-        
-        for (PostDTO postDTO : postDTOList) {
-
-            Post post = new Post();
-            post.setTitle(postDTO.getTitle());
-            post.setBody(postDTO.getBody());
-            post.setUserId(postDTO.getUserId());
-            
-            postRepository.save(post);
-        }
+        postDTOList.forEach(this::savePostFromDTO);
     }
 
     public List<PostDTO> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                    .map(this::convertToDTO)
-                    .collect(Collectors.toList());
+                .map(postMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
-    
+
     public PostDTO getPostById(Long id) {
-        Post post = postRepository.findById(id)
-                                  .orElseThrow(() -> new RuntimeException("Post não encontrado"));
-        return convertToDTO(post);
+        return postRepository.findById(id)
+                .map(postMapper::convertToDTO)
+                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
     }
-    
+
     public PostDTO createPost(PostDTO postDTO) {
-        Post post = convertToEntity(postDTO);
-        post = postRepository.save(post);
-        return convertToDTO(post);
+        Post post = postMapper.convertToEntity(postDTO);
+        return postMapper.convertToDTO(postRepository.save(post));
     }
-    
+
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id)
-                                  .orElseThrow(() -> new RuntimeException("Post não encontrado"));
-        
-        post.setTitle(postDTO.getTitle());
-        post.setBody(postDTO.getBody());
-        post.setUserId(postDTO.getUserId());
-    
-        post = postRepository.save(post);
-        return convertToDTO(post);
+                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+        updatePostEntity(post, postDTO);
+        return postMapper.convertToDTO(postRepository.save(post));
     }
-    
+
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
 
-
-    private PostDTO convertToDTO(Post post) {
-        return new PostDTO(post.getId(), post.getTitle(), post.getBody(), post.getUserId());
-    }
-
-    private Post convertToEntity(PostDTO postDTO) {
-        Post post = new Post();
+    private void updatePostEntity(Post post, PostDTO postDTO) {
         post.setTitle(postDTO.getTitle());
         post.setBody(postDTO.getBody());
         post.setUserId(postDTO.getUserId());
-        
-        return post;
-    }   
+    }
+
+    private void savePostFromDTO(PostDTO postDTO) {
+        Post post = postMapper.convertToEntity(postDTO);
+        postRepository.save(post);
+    }
 }
