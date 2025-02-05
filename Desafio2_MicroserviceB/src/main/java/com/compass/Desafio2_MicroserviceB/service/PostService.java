@@ -3,6 +3,7 @@ package com.compass.Desafio2_MicroserviceB.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
@@ -36,7 +37,7 @@ public class PostService {
     public PostDTO getPostById(Long id) {
         return postRepository.findById(id)
                 .map(postMapper::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
     }
 
     public PostDTO createPost(PostDTO postDTO) {
