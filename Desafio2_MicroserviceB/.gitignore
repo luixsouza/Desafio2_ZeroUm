@@ -1,12 +1,9 @@
-# Diretórios de build
+HELP.md
 target/
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-# Arquivos gerados por IDEs
 ### STS ###
 .apt_generated
 .classpath
@@ -28,12 +25,26 @@ build/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
 
-# Arquivos de compilação
+# Compiled class file
 *.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
 *.jar
 *.war
 *.nar
@@ -42,15 +53,6 @@ build/
 *.tar.gz
 *.rar
 
-# Arquivos de log
-*.log
-
-# Arquivos específicos do BlueJ
-*.ctxt
-
-# Arquivos temporários do Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Logs de crash da JVM
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
