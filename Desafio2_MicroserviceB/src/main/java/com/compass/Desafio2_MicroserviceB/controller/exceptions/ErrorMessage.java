@@ -16,14 +16,14 @@ public class ErrorMessage {
     private String message; // mensagem de erro
 
 
-    public ErrorMessage(){}
+    public ErrorMessage() {
+    }
 
-    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message){
+    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message) {
         this.path = request.getRequestURI();
         this.method = request.getMethod();
         this.status = status.value();
         this.statusText = status.getReasonPhrase();
         this.message = message;
     }
-
 }

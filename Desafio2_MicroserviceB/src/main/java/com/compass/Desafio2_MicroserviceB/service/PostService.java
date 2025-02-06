@@ -1,18 +1,16 @@
 package com.compass.Desafio2_MicroserviceB.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
-import org.springframework.stereotype.Service;
-
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
+import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +45,7 @@ public class PostService {
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
         updatePostEntity(post, postDTO);
         return postMapper.convertToDTO(postRepository.save(post));
     }
