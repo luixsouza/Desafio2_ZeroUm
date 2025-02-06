@@ -2,12 +2,15 @@ package com.compass.Desafio2_MicroserviceB.service;
 
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
+import com.compass.Desafio2_MicroserviceB.exceptions.CamposInvalidosException;
 import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +28,7 @@ public class PostService {
         postDTOList.forEach(this::savePostFromDTO);
     }
 
+    @Transactional(readOnly = true)
     public List<PostDTO> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
@@ -32,6 +36,7 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public PostDTO getPostById(Long id) {
         return postRepository.findById(id)
                 .map(postMapper::convertToDTO)
@@ -39,8 +44,12 @@ public class PostService {
     }
 
     public PostDTO createPost(PostDTO postDTO) {
-        Post post = postMapper.convertToEntity(postDTO);
-        return postMapper.convertToDTO(postRepository.save(post));
+        try {
+            Post post = postMapper.convertToEntity(postDTO);
+            return postMapper.convertToDTO(postRepository.save(post));
+        } catch (ConstraintViolationException e) {
+            throw new CamposInvalidosException("Os campos do post não podem estar vazios.");
+        }
     }
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {

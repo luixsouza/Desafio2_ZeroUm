@@ -1,5 +1,6 @@
 package com.compass.Desafio2_MicroserviceB.controller.exceptions;
 
+import com.compass.Desafio2_MicroserviceB.exceptions.CamposInvalidosException;
 import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,14 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, e.getMessage()));
+    }
+
+    @ExceptionHandler(CamposInvalidosException.class)
+    public ResponseEntity<ErrorMessage> camposInvalidosException(CamposInvalidosException e, HttpServletRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, e.getMessage()));
     }
 }
