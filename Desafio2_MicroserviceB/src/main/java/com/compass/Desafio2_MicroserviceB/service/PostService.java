@@ -8,6 +8,7 @@ import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,7 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
     }
 
-    public PostDTO createPost(PostDTO postDTO) {
+    public PostDTO createPost(@Valid PostDTO postDTO) {
         try {
             Post post = postMapper.convertToEntity(postDTO);
             return postMapper.convertToDTO(postRepository.save(post));
@@ -52,18 +53,20 @@ public class PostService {
         }
     }
 
-    public PostDTO updatePost(Long id, PostDTO postDTO) {
+    public PostDTO updatePost(Long id, @Valid PostDTO postDTO) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
-        updatePostEntity(post, postDTO);
-        return postMapper.convertToDTO(postRepository.save(post));
+        try {
+            updatePostEntity(post, postDTO);
+            return postMapper.convertToDTO(postRepository.save(post));
+        } catch (Exception e) {
+            throw new CamposInvalidosException("Os campos do post não podem estar vazios.");
+        }
     }
 
     public void deletePost(Long id) {
-        if (!postRepository.existsById(id)) {
+        if (!postRepository.existsById(id))
             throw new EntityNotFoundException("Post não encontrado");
-        }
-
 
         postRepository.deleteById(id);
     }
