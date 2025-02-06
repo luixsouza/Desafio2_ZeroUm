@@ -60,6 +60,11 @@ public class PostService {
     }
 
     public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new EntityNotFoundException("Post não encontrado");
+        }
+
+
         postRepository.deleteById(id);
     }
 
