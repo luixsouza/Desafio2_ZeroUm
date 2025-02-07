@@ -1,17 +1,17 @@
 package com.compass.Desafio2_MicroserviceB.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
+import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +26,7 @@ public class PostService {
         postDTOList.forEach(this::savePostFromDTO);
     }
 
+    @Transactional(readOnly = true)
     public List<PostDTO> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
@@ -33,10 +34,11 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public PostDTO getPostById(Long id) {
         return postRepository.findById(id)
                 .map(postMapper::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
     }
 
     public PostDTO createPost(PostDTO postDTO) {
@@ -46,12 +48,15 @@ public class PostService {
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
         updatePostEntity(post, postDTO);
         return postMapper.convertToDTO(postRepository.save(post));
     }
 
     public void deletePost(Long id) {
+        if (!postRepository.existsById(id))
+            throw new EntityNotFoundException("Post não encontrado.");
+
         postRepository.deleteById(id);
     }
 
