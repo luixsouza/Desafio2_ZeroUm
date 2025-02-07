@@ -38,7 +38,7 @@ public class PostService {
     public PostDTO getPostById(Long id) {
         return postRepository.findById(id)
                 .map(postMapper::convertToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Post not found."));
     }
 
     public PostDTO createPost(PostDTO postDTO) {
@@ -48,14 +48,14 @@ public class PostService {
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Post not found."));
         updatePostEntity(post, postDTO);
         return postMapper.convertToDTO(postRepository.save(post));
     }
 
     public void deletePost(Long id) {
         if (!postRepository.existsById(id))
-            throw new EntityNotFoundException("Post não encontrado.");
+            throw new EntityNotFoundException("Post not found.");
 
         postRepository.deleteById(id);
     }

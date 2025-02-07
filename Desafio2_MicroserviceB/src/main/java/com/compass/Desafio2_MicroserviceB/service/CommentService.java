@@ -1,6 +1,7 @@
 package com.compass.Desafio2_MicroserviceB.service;
 
 import com.compass.Desafio2_MicroserviceB.dto.CommentDTO;
+import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.model.Comment;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.CommentRepository;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +32,7 @@ public class CommentService {
     public CommentDTO createComment(Long postId, CommentDTO commentDTO) {
         // Buscar o post no banco
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
 
         // Criar a entidade Comment a partir do DTO
         Comment comment = new Comment();
@@ -71,7 +71,6 @@ public class CommentService {
         // Deletar o comentário do banco de dados
         commentRepository.delete(comment);
     }
-
 
 
     // Método para converter a entidade Comment para DTO
