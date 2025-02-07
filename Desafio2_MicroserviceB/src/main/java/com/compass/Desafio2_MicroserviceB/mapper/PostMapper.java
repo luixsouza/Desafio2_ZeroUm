@@ -1,5 +1,6 @@
 package com.compass.Desafio2_MicroserviceB.mapper;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Component;
 
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
@@ -12,7 +13,7 @@ public class PostMapper {
         return new PostDTO(post.getId(), post.getTitle(), post.getBody(), post.getUserId());
     }
 
-    public Post convertToEntity(PostDTO postDTO) {
+    public Post convertToEntity(@Valid PostDTO postDTO) {
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setBody(postDTO.getBody());

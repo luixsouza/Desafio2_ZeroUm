@@ -2,13 +2,10 @@ package com.compass.Desafio2_MicroserviceB.service;
 
 import com.compass.Desafio2_MicroserviceB.client.JsonPlaceholderClient;
 import com.compass.Desafio2_MicroserviceB.dto.PostDTO;
-import com.compass.Desafio2_MicroserviceB.exceptions.CamposInvalidosException;
 import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.mapper.PostMapper;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.PostRepository;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,32 +38,24 @@ public class PostService {
     public PostDTO getPostById(Long id) {
         return postRepository.findById(id)
                 .map(postMapper::convertToDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
     }
 
-    public PostDTO createPost(@Valid PostDTO postDTO) {
-        try {
-            Post post = postMapper.convertToEntity(postDTO);
-            return postMapper.convertToDTO(postRepository.save(post));
-        } catch (ConstraintViolationException e) {
-            throw new CamposInvalidosException("Os campos do post não podem estar vazios.");
-        }
+    public PostDTO createPost(PostDTO postDTO) {
+        Post post = postMapper.convertToEntity(postDTO);
+        return postMapper.convertToDTO(postRepository.save(post));
     }
 
-    public PostDTO updatePost(Long id, @Valid PostDTO postDTO) {
+    public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado"));
-        try {
-            updatePostEntity(post, postDTO);
-            return postMapper.convertToDTO(postRepository.save(post));
-        } catch (Exception e) {
-            throw new CamposInvalidosException("Os campos do post não podem estar vazios.");
-        }
+                .orElseThrow(() -> new EntityNotFoundException("Post não encontrado."));
+        updatePostEntity(post, postDTO);
+        return postMapper.convertToDTO(postRepository.save(post));
     }
 
     public void deletePost(Long id) {
         if (!postRepository.existsById(id))
-            throw new EntityNotFoundException("Post não encontrado");
+            throw new EntityNotFoundException("Post não encontrado.");
 
         postRepository.deleteById(id);
     }
