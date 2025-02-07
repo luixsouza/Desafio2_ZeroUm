@@ -2,6 +2,7 @@ package com.compass.Desafio2_MicroserviceB.controller;
 
 import com.compass.Desafio2_MicroserviceB.dto.CommentDTO;
 import com.compass.Desafio2_MicroserviceB.service.CommentService;  // O serviço para os comentários
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,12 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentDTO> createComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<CommentDTO> createComment(@PathVariable Long postId, @Valid @RequestBody CommentDTO commentDTO) {
         return ResponseEntity.ok(commentService.createComment(postId, commentDTO));
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable Long postId, @PathVariable Long commentId, @Valid @RequestBody CommentDTO commentDTO) {
         return ResponseEntity.ok(commentService.updateComment(postId, commentId, commentDTO));
     }
 

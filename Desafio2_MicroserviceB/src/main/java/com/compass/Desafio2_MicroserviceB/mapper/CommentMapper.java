@@ -16,8 +16,8 @@ public class CommentMapper {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
         commentDTO.setPostId(comment.getPost().getId()); // Obtém o ID do post associado
-        commentDTO.setName(comment.getPost().getTitle()); // Exemplo de como preencher com o título do post (pode ser alterado conforme necessário)
-        commentDTO.setEmail("example@example.com"); // Substitua com a lógica para obter o email, caso necessário
+        commentDTO.setName(comment.getPost().getTitle());
+        commentDTO.setEmail("example@example.com");
         commentDTO.setBody(comment.getText()); // Mapear o texto para o corpo do comentário
         return commentDTO;
     }
