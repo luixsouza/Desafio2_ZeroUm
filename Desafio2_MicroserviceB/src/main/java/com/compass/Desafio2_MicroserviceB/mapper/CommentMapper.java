@@ -14,10 +14,11 @@ public class CommentMapper {
         }
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
+
         commentDTO.setPostId(comment.getPost().getId());
         commentDTO.setName(comment.getPost().getTitle());
         commentDTO.setEmail("example@example.com");
-        commentDTO.setBody(comment.getText());
+        commentDTO.setBody(comment.getText());     
         return commentDTO;
     }
 

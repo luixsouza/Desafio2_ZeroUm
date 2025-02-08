@@ -1,6 +1,7 @@
 package com.compass.Desafio2_MicroserviceB.service;
 
 import com.compass.Desafio2_MicroserviceB.dto.CommentDTO;
+import com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException;
 import com.compass.Desafio2_MicroserviceB.model.Comment;
 import com.compass.Desafio2_MicroserviceB.model.Post;
 import com.compass.Desafio2_MicroserviceB.repository.CommentRepository;
@@ -27,7 +28,7 @@ public class CommentService {
 
     public CommentDTO createComment(Long postId, CommentDTO commentDTO) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
 
         Comment comment = new Comment();
         comment.setName(commentDTO.getName());
