@@ -1,7 +1,7 @@
 package com.compass.Desafio2_MicroserviceB.controller;
 
 import com.compass.Desafio2_MicroserviceB.dto.CommentDTO;
-import com.compass.Desafio2_MicroserviceB.service.CommentService;  // O serviço para os comentários
+import com.compass.Desafio2_MicroserviceB.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")  // Define o caminho para acessar os comentários de um post
+@RequestMapping("/api/posts/{postId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -33,7 +33,7 @@ public class CommentController {
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         commentService.deleteComment(postId, commentId);
-        return ResponseEntity.noContent().build();  // Retorna 204 No Content
+        return ResponseEntity.noContent().build();
     }
 
 }
