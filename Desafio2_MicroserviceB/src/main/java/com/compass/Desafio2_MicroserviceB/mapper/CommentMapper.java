@@ -8,29 +8,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommentMapper {
 
-    // Converte a entidade Comment para o DTO CommentDTO
     public CommentDTO convertToDTO(Comment comment) {
         if (comment == null) {
             return null;
         }
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
-        commentDTO.setPostId(comment.getPost().getId()); // Obtém o ID do post associado
+
+        commentDTO.setPostId(comment.getPost().getId());
         commentDTO.setName(comment.getPost().getTitle());
         commentDTO.setEmail("example@example.com");
-        commentDTO.setBody(comment.getText()); // Mapear o texto para o corpo do comentário
+        commentDTO.setBody(comment.getText());     
         return commentDTO;
     }
 
-    // Converte o DTO CommentDTO para a entidade Comment
+
     public Comment convertToEntity(CommentDTO commentDTO, Post post) {
         if (commentDTO == null) {
             return null;
         }
         Comment comment = new Comment();
         comment.setId(commentDTO.getId());
-        comment.setText(commentDTO.getBody()); // Mapear o corpo para o texto do comentário
-        comment.setPost(post); // Associa o post com o comentário
+        comment.setText(commentDTO.getBody());
+        comment.setPost(post);
         return comment;
     }
 }
