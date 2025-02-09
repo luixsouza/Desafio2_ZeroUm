@@ -2,6 +2,9 @@ package com.compass.Desafio2_MicroserviceA.service;
 
 import com.compass.Desafio2_MicroserviceA.dto.CommentDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,8 +29,13 @@ public class CommentService {
 
     public CommentDTO updateComment(Long postId, Long commentId, CommentDTO commentDTO) {
         String url = BASE_URL + "/" + postId + "/comments/" + commentId;
-        restTemplate.put(url, commentDTO);
-        return commentDTO;
+        ResponseEntity<CommentDTO> response = restTemplate.exchange(
+                url,
+                HttpMethod.PUT,
+                new HttpEntity<>(commentDTO),
+                CommentDTO.class
+        );
+        return response.getBody();
     }
 
     public void deleteComment(Long postId, Long commentId) {
