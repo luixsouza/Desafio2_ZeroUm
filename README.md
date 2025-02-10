@@ -35,6 +35,7 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
     GET http://localhost:8080/api/posts
     ```
 
+<<<<<<< HEAD
 - **GET /api/posts/{id}** → Lista uma postagem específica
   - **Exemplo de Request**:
     ```http
@@ -64,6 +65,23 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
       "userId": 1
     }
     ```
+=======
+## ⬇️ Arquivo JSON com Endpoints para Importação no Postman
+
+Para facilitar o teste dos endpoints, disponibilizamos um arquivo JSON formatado para importação direta no Postman (ou ferramentas similares). Este arquivo contém todas as configurações de requisição necessárias para interagir com os microserviços.
+
+[**Download do arquivo JSON:** REST API basics- CRUD.postman_collection.json](https://github.com/luixsouza/Desafio2_ZeroUm/blob/main/docs/REST%20API%20basics%20-%20CRUD.postman_collection.json)
+
+
+**Como importar no Postman:**
+
+1.  Baixe o arquivo `REST API basics- CRUD.postman_collection.json` clicando no link acima.
+2.  Abra o Postman.
+3.  Clique no botão "Import" (geralmente no canto superior esquerdo).
+4.  Escolha a opção "Import from File" e selecione o arquivo JSON que você baixou.
+
+Após a importação, você terá uma nova Collection no Postman com todos os endpoints pré-configurados, prontos para serem utilizados.
+>>>>>>> developer
 
 - **PUT /api/posts/{id}** → Atualiza uma postagem
   - **Exemplo de Request**:
