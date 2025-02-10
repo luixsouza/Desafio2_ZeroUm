@@ -46,7 +46,8 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
 
 Para facilitar o teste dos endpoints, disponibilizamos um arquivo JSON formatado para importação direta no Postman (ou ferramentas similares). Este arquivo contém todas as configurações de requisição necessárias para interagir com os microserviços.
 
-[**Download do arquivo JSON:** REST API basics- CRUD.postman_collection.json](docs/REST%20API%20basics-%20CRUD.postman_collection.json)
+[**Download do arquivo JSON:** REST API basics- CRUD.postman_collection.json](https://github.com/luixsouza/Desafio2_ZeroUm/blob/main/docs/REST%20API%20basics%20-%20CRUD.postman_collection.json)
+
 
 **Como importar no Postman:**
 
