@@ -35,7 +35,6 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
     GET http://localhost:8080/api/posts
     ```
 
-<<<<<<< HEAD
 - **GET /api/posts/{id}** → Lista uma postagem específica
   - **Exemplo de Request**:
     ```http
@@ -65,7 +64,6 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
       "userId": 1
     }
     ```
-=======
 ## ⬇️ Arquivo JSON com Endpoints para Importação no Postman
 
 Para facilitar o teste dos endpoints, disponibilizamos um arquivo JSON formatado para importação direta no Postman (ou ferramentas similares). Este arquivo contém todas as configurações de requisição necessárias para interagir com os microserviços.
@@ -81,7 +79,6 @@ Para facilitar o teste dos endpoints, disponibilizamos um arquivo JSON formatado
 4.  Escolha a opção "Import from File" e selecione o arquivo JSON que você baixou.
 
 Após a importação, você terá uma nova Collection no Postman com todos os endpoints pré-configurados, prontos para serem utilizados.
->>>>>>> developer
 
 - **PUT /api/posts/{id}** → Atualiza uma postagem
   - **Exemplo de Request**:
@@ -114,7 +111,7 @@ Após a importação, você terá uma nova Collection no Postman com todos os en
     ```json
     {
       "name": "Comentário",
-      "email": "Email do comentário",
+      "email": "exemplo@email.com",
       "body": "Conteúdo do comentário"
     }
     ```
@@ -129,7 +126,7 @@ Após a importação, você terá uma nova Collection no Postman com todos os en
     ```json
     {
       "name": "Comentário atualizado",
-      "email": "Email do comentário"
+      "email": "exemplo@email.com"
       "body": "Texto do comentário atualizado"
     }
     ```
