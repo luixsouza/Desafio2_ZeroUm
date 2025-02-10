@@ -1,14 +1,13 @@
-
 # 📌 Desafio 2 | Grupo ZeroUm - Sistema de Microserviços com Spring Boot
 
 Projeto com Microserviços A e B para gerenciamento de postagens e comentários usando Spring Boot, FeignClient e JSONPlaceholder como API externa.
 
 Este projeto implementa dois microserviços em Spring Boot:
 
-Microserviço A: Serviço responsável por receber as requisições do cliente.
-Microserviço B: Responsável por receber as requisições do serviço A e gerenciar os dados das postagens via JSONPlaceholder.
-Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
+- **Microserviço A**: Serviço responsável por receber as requisições do cliente.
+- **Microserviço B**: Responsável por receber as requisições do serviço A e gerenciar os dados das postagens via JSONPlaceholder.
 
+Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
 
 # 👤 Autores
 
@@ -18,32 +17,119 @@ Os serviços se comunicam via FeignClient, e a API é documentada com Swagger.
 - Karollyne Evangelista Moreira | [@KarollyneDev](https://github.com/KarollyneDev)
 - Luis Eduardo Souza Teles | [@luixsouza](https://github.com/luixsouza)
 
-
 # 🚀 Tecnologias Utilizadas
 - Java 17
-- Spring Boot 
-- Feign cliente
+- Spring Boot
+- Feign Client
 - JSONPlaceholder
 - Swagger
 - H2
 
 # 📌 Endpoints Disponíveis
-🟢 Microserviço A (Porta 8080)
-- GET /api/posts → Lista todas as postagens
-- GET /api/posts/{id} → Lista uma postagem em específico
-- POST /api/posts → Cria uma nova postagem
-- PUT /api/posts/{id} → Atualiza uma postagem
-- DELETE /api/posts/{id} → Remove uma postagem
-- POST /api/posts/{id}/comments → Cria um novo comentário
-- PUT /api/posts/{id}/comments/{id} → Atualiza um comentário
-- DELETE /api/posts/{id}/comments/{id} - Remove um comentário
 
-🔵 Microserviço B (Porta 8081)
-- POST /api/sync-data
+🟢 **Microserviço A (Porta 8080)**
 
+- **GET /api/posts** → Lista todas as postagens
+  - **Exemplo de Request**:
+    ```http
+    GET http://localhost:8080/api/posts
+    ```
 
+- **GET /api/posts/{id}** → Lista uma postagem específica
+  - **Exemplo de Request**:
+    ```http
+    GET http://localhost:8080/api/posts/1
+    ```
+  - **Exemplo de Resposta (JSON)**:
+    ```json
+    {
+      "id": 1,
+      "title": "Título da postagem",
+      "body": "Conteúdo da postagem"
+      "userId": 1
+    }
+    ```
 
+- **POST /api/posts** → Cria uma nova postagem
+  - **Exemplo de Request**:
+    ```http
+    POST http://localhost:8080/api/posts
+    Content-Type: application/json
+    ```
+  - **Exemplo de Body (JSON)**:
+    ```json
+    {
+      "title": "Nova postagem",
+      "body": "Conteúdo da nova postagem"
+      "userId": 1
+    }
+    ```
 
+- **PUT /api/posts/{id}** → Atualiza uma postagem
+  - **Exemplo de Request**:
+    ```http
+    PUT http://localhost:8080/api/posts/1
+    Content-Type: application/json
+    ```
+  - **Exemplo de Body (JSON)**:
+    ```json
+    {
+      "title": "Título atualizado",
+      "body": "Conteúdo da postagem atualizado"
+      "userId": 1
+    }
+    ```
+
+- **DELETE /api/posts/{id}** → Remove uma postagem
+  - **Exemplo de Request**:
+    ```http
+    DELETE http://localhost:8080/api/posts/1
+    ```
+
+- **POST /api/posts/{id}/comments** → Cria um novo comentário
+  - **Exemplo de Request**:
+    ```http
+    POST http://localhost:8080/api/posts/1/comments
+    Content-Type: application/json
+    ```
+  - **Exemplo de Body (JSON)**:
+    ```json
+    {
+      "name": "Comentário",
+      "email": "Email do comentário",
+      "body": "Conteúdo do comentário"
+    }
+    ```
+
+- **PUT /api/posts/{id}/comments/{id}** → Atualiza um comentário
+  - **Exemplo de Request**:
+    ```http
+    PUT http://localhost:8080/api/posts/1/comments/1
+    Content-Type: application/json
+    ```
+  - **Exemplo de Body (JSON)**:
+    ```json
+    {
+      "name": "Comentário atualizado",
+      "email": "Email do comentário"
+      "body": "Texto do comentário atualizado"
+    }
+    ```
+
+- **DELETE /api/posts/{id}/comments/{id}** → Remove um comentário
+  - **Exemplo de Request**:
+    ```http
+    DELETE http://localhost:8080/api/posts/1/comments/1
+    ```
+
+🔵 **Microserviço B (Porta 8081)**
+
+- **POST /api/sync-data** → Sincroniza os dados
+  - **Exemplo de Request**:
+    ```http
+    POST http://localhost:8081/api/sync-data
+    Content-Type: application/json
+    ```
 
 # Rodando localmente
 
@@ -60,13 +146,13 @@ Entre no diretório do projeto e abra na IDE de sua preferência (recomendado o 
 ```
 
 Instale (ou atualize) as dependências caso necessário
- 
 
 Rodar microserviço B
 
 ```bash
     mvn spring-boot:run
 ```
+
 Rodar microserviço A
 
 ```bash
@@ -78,7 +164,6 @@ Agora os microserviços estão rodando em:
 - Microserviço A: http://localhost:8080
 - Microserviço B: http://localhost:8081
 
-Usando o Postman ou algum software para fazer as requisições, faça a requisição para consumir a API externa (http://localhost:8081/api/sync-data)
+Usando o Postman ou algum software para fazer as requisições, faça a requisição para consumir a API externa POST - http://localhost:8081/api/sync-data
 
-Feito isso você estará pronto para requirir as demais funcionalidades da aplicação.
-
+Feito isso, você estará pronto para requirir as demais funcionalidades da aplicação.
