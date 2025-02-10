@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class CommentServiceTest {
@@ -42,45 +43,56 @@ class CommentServiceTest {
         comment.setName("Test Name");
         comment.setEmail("test@example.com");
         comment.setText("Test Text");
-
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.setId(1L);
-        commentDTO.setName("Test Name");
-        commentDTO.setEmail("test@example.com");
-        commentDTO.setBody("Test Text");
-
+    
+        Post post = new Post();
+        post.setId(1L);
+        comment.setPost(post);
+    
         when(commentRepository.findByPostId(1L)).thenReturn(Collections.singletonList(comment));
-
+    
         List<CommentDTO> result = commentService.getCommentsByPostId(1L);
-
+    
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals(commentDTO, result.get(0));
+    
+        CommentDTO commentDTO = result.get(0);
+        assertEquals(1L, commentDTO.getId());
+        assertEquals(1L, commentDTO.getPostId());
+        assertEquals("Test Name", commentDTO.getName());
+        assertEquals("test@example.com", commentDTO.getEmail());
+        assertEquals("Test Text", commentDTO.getBody());
     }
 
     @Test
     void testCreateComment() {
+
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setName("Test Name");
         commentDTO.setEmail("test@example.com");
         commentDTO.setBody("Test Text");
-
+    
         Post post = new Post();
         post.setId(1L);
-
+    
         Comment comment = new Comment();
+        comment.setId(1L);
         comment.setName("Test Name");
         comment.setEmail("test@example.com");
         comment.setText("Test Text");
         comment.setPost(post);
-
+    
         when(postRepository.findById(1L)).thenReturn(Optional.of(post));
+
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);
 
         CommentDTO result = commentService.createComment(1L, commentDTO);
 
         assertNotNull(result);
-        assertEquals(commentDTO, result);
+        assertEquals(1L, result.getId());
+        assertEquals(1L, result.getPostId());
+        assertEquals("Test Name", result.getName());
+        assertEquals("test@example.com", result.getEmail());
+        assertEquals("Test Text", result.getBody());
     }
 
     @Test
@@ -97,28 +109,33 @@ class CommentServiceTest {
 
     @Test
     void testUpdateComment() {
+
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setName("Updated Name");
         commentDTO.setEmail("updated@example.com");
         commentDTO.setBody("Updated Text");
-
+    
         Post post = new Post();
         post.setId(1L);
-
+    
         Comment comment = new Comment();
         comment.setId(1L);
         comment.setName("Test Name");
         comment.setEmail("test@example.com");
         comment.setText("Test Text");
         comment.setPost(post);
-
+    
         when(commentRepository.findById(1L)).thenReturn(Optional.of(comment));
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);
-
+    
         CommentDTO result = commentService.updateComment(1L, 1L, commentDTO);
-
+    
         assertNotNull(result);
-        assertEquals(commentDTO, result);
+        assertEquals(1L, result.getId());
+        assertEquals(1L, result.getPostId());
+        assertEquals("Updated Name", result.getName());
+        assertEquals("updated@example.com", result.getEmail());
+        assertEquals("Updated Text", result.getBody());
     }
 
     @Test
