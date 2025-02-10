@@ -1,5 +1,6 @@
 package com.compass.Desafio2_MicroserviceA.client;
 
+import com.compass.Desafio2_MicroserviceA.dto.CommentDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,4 +25,7 @@ public interface PostClient {
 
     @DeleteMapping("/{id}")
     void deletePost(@PathVariable Long id);
+
+    @PostMapping("/{postId}/comments")
+    CommentDTO createComment(@PathVariable("postId") Long postId, @RequestBody CommentDTO commentDTO);
 }

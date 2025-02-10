@@ -8,8 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class CommentDTO {
-    private Long postId;
     private Long id;
+    private Long postId;
     private String name;
     private String email;
     private String body;
