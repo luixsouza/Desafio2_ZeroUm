@@ -1,4 +1,5 @@
-import org.springdoc.core.GroupedOpenApi;
+package com.compass.Desafio2_MicroserviceA.config;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
