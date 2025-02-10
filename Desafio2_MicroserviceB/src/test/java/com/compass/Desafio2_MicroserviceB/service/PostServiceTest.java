@@ -104,7 +104,8 @@ class PostServiceTest {
     void testGetPostByIdNotFound() {
         when(postRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class, () -> postService.getPostById(1L));
+        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class,
+                    () -> postService.getPostById(1L));
     }
 
     @Test
@@ -161,7 +162,8 @@ class PostServiceTest {
 
         when(postRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class, () -> postService.updatePost(1L, postDTO));
+        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class,
+                    () -> postService.updatePost(1L, postDTO));
     }
 
     @Test
@@ -177,6 +179,7 @@ class PostServiceTest {
     void testDeletePostNotFound() {
         when(postRepository.existsById(1L)).thenReturn(false);
 
-        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class, () -> postService.deletePost(1L));
+        assertThrows(com.compass.Desafio2_MicroserviceB.exceptions.EntityNotFoundException.class,
+                    () -> postService.deletePost(1L));
     }
 }

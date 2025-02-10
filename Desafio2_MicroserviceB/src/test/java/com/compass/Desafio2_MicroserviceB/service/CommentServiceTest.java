@@ -104,7 +104,8 @@ class CommentServiceTest {
 
         when(postRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> commentService.createComment(1L, commentDTO));
+        assertThrows(EntityNotFoundException.class,
+                    () -> commentService.createComment(1L, commentDTO));
     }
 
     @Test
@@ -147,7 +148,8 @@ class CommentServiceTest {
 
         when(commentRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> commentService.updateComment(1L, 1L, commentDTO));
+        assertThrows(RuntimeException.class, 
+                    () -> commentService.updateComment(1L, 1L, commentDTO));
     }
 
     @Test
@@ -169,7 +171,8 @@ class CommentServiceTest {
 
         when(commentRepository.findById(1L)).thenReturn(Optional.of(comment));
 
-        assertThrows(RuntimeException.class, () -> commentService.updateComment(1L, 1L, commentDTO));
+        assertThrows(RuntimeException.class, 
+                    () -> commentService.updateComment(1L, 1L, commentDTO));
     }
 
     @Test
@@ -195,7 +198,8 @@ class CommentServiceTest {
     void testDeleteCommentNotFound() {
         when(commentRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> commentService.deleteComment(1L, 1L));
+        assertThrows(RuntimeException.class,
+                    () -> commentService.deleteComment(1L, 1L));
     }
 
     @Test
@@ -212,6 +216,7 @@ class CommentServiceTest {
 
         when(commentRepository.findById(1L)).thenReturn(Optional.of(comment));
 
-        assertThrows(RuntimeException.class, () -> commentService.deleteComment(1L, 1L));
+        assertThrows(RuntimeException.class, 
+                    () -> commentService.deleteComment(1L, 1L));
     }
 }
